@@ -1,0 +1,20 @@
+BenchmarkDotNet v0.15.3, Windows 11 (10.0.26100.6584/24H2/2024Update/HudsonValley)
+AMD Ryzen 5 5600X 3.70GHz, 1 CPU, 12 logical and 6 physical cores
+  [Host]     : .NET 9.0.9, X64 NativeAOT x86-64-v3
+  DefaultJob : .NET 9.0.9, X64 NativeAOT x86-64-v3
+
+
+| Method                                            | RowCount  | Mean            | Error         | StdDev          | Gen0      | Gen1      | Gen2      | Allocated      |
+|-------------------------------------------------- |---------- |----------------:|--------------:|----------------:|----------:|----------:|----------:|---------------:|
+| UseParallelTextFileProcessorAsync                 | 1000      |        543.2 us |      10.75 us |        13.59 us |  333.0078 |  333.0078 |  333.0078 |     1044.05 KB |
+| UseParallelTextFileProcessorNoContextFactoryAsync | 1000      |        551.3 us |      10.98 us |        19.52 us |  333.0078 |  333.0078 |  333.0078 |     1054.36 KB |
+| UseSep                                            | 1000      |        156.4 us |       2.71 us |         2.53 us |    0.9766 |         - |         - |       16.81 KB |
+| UseParallelTextFileProcessorAsync                 | 100000    |      9,259.0 us |     157.80 us |       139.89 us |   78.1250 |   62.5000 |         - |     2442.65 KB |
+| UseParallelTextFileProcessorNoContextFactoryAsync | 100000    |      9,426.9 us |     137.52 us |       107.36 us |  125.0000 |   78.1250 |   31.2500 |     3546.58 KB |
+| UseSep                                            | 100000    |     12,710.8 us |     204.59 us |       330.38 us |  281.2500 |  281.2500 |  281.2500 |     1033.54 KB |
+| UseParallelTextFileProcessorAsync                 | 1000000   |     86,707.4 us |   1,722.39 us |     1,691.62 us |         - |         - |         - |    12299.48 KB |
+| UseParallelTextFileProcessorNoContextFactoryAsync | 1000000   |     90,441.1 us |   1,789.00 us |     3,964.29 us |         - |         - |         - |    23376.26 KB |
+| UseSep                                            | 1000000   |    134,176.8 us |   2,458.63 us |     3,019.42 us | 1750.0000 | 1750.0000 | 1750.0000 |     8203.04 KB |
+| UseParallelTextFileProcessorAsync                 | 100000000 | 13,740,131.5 us | 484,728.90 us | 1,429,234.20 us | 2000.0000 | 2000.0000 | 2000.0000 | 15134497.01 KB |
+| UseParallelTextFileProcessorNoContextFactoryAsync | 100000000 | 14,210,021.2 us | 281,331.08 us |   574,684.88 us | 2000.0000 | 2000.0000 | 2000.0000 | 16244233.94 KB |
+| UseSep                                            | 100000000 | 13,053,080.4 us |  71,671.16 us |    67,041.25 us | 6000.0000 | 6000.0000 | 6000.0000 |  1048592.79 KB |
