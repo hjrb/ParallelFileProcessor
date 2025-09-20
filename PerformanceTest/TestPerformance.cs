@@ -17,7 +17,7 @@ namespace PerformanceTest
     public class TestPerformance
     {
         private string tempFile = string.Empty;
-        [Params(1_000, 100_000, 1_000_000, 10_000_000_000)]
+        [Params(1_000, 100_000, 1_000_000, 100_000_000)]
         public long RowCount { get; set; }
         [GlobalSetup]
         public void Setup()
