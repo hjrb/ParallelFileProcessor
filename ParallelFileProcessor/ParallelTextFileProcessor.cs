@@ -27,7 +27,6 @@ public class ParallelTextFileProcessor
 	/// <summary>
 	/// the result of the processing
 	/// </summary>
-	/// <typeparam name="T">the type of the context items</typeparam>
 	/// <param name="ParallelTasks">the number of parallel tasks used</param>
 	/// <param name="TotalTasks">the number of total tasks executed, which can be more than parallel tasks</param>
 	/// <param name="ChunkSize">the chunk size in bytes processed by each task</param>
@@ -261,7 +260,7 @@ public class ParallelTextFileProcessor
 			return -1;
 		}
 
-		var max = buffer.Length - bytesToFind.Length; // Math.Min(buffer.Length - bytesToFind.Length, startOffset + maxLength);
+		var max = buffer.Length - bytesToFind.Length; 
 		for (var i = startOffset; i <= max; i++)
 		{
 			if (buffer.Slice(i, bytesToFind.Length).SequenceEqual(bytesToFind))

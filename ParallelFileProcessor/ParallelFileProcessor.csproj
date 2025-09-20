@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PublishAot>true</PublishAot>
+    <Nullable>enable</Nullable>
+
+    <!-- NuGet package metadata -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ParallelFileProcessor</PackageId>
+    <Title>ParallelFileProcessor</Title>
+    <Version>0.1.0</Version>
+    <Authors>hjrb</Authors>
+    <Company>hjrb</Company>
+    <Description>High-performance parallel line-oriented text file processor with zero-allocation span-based API supporting UTF encodings with BOM detection.</Description>
+    <PackageTags>parallel;file;processing;lines;utf8;performance;span</PackageTags>
+    <RepositoryUrl>https://github.com/hjrb/ParallelFileProcessor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/hjrb/ParallelFileProcessor</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EnablePackageValidation>false</EnablePackageValidation>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageReleaseNotes>0.1.0 Initial preview: parallel chunked line processing, BOM detection (UTF-8/16/32 LE+BE), per-task context + finalize callback, zero-copy Span&lt;byte&gt; lines, auto chunk/task sizing.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Include root README in the package -->
+    <None Include="..\README.md" Pack="true" PackagePath="/README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- SourceLink for better debugging experience -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>
