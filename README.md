@@ -42,8 +42,7 @@ Task<ProcessResult> ProcessAsync<T>(
 
 ## Quick Start
 ```bash
-# (Assuming .NET 10 preview toolchain installed)
-dotnet add package (not published yet) # currently local source only
+dotnet add package ParallelFileProcessor
 ```
 
 ### Minimal Example (count lines containing an error token)
