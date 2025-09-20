@@ -11,8 +11,8 @@
     <PackageId>ParallelFileProcessor</PackageId>
     <Title>ParallelFileProcessor</Title>
     <Version>0.1.0</Version>
-    <Authors>hjrb</Authors>
-    <Company>hjrb</Company>
+    <Authors>HunnyR</Authors>
+    <Company>HunnR</Company>
     <Description>High-performance parallel line-oriented text file processor with zero-allocation span-based API supporting UTF encodings with BOM detection.</Description>
     <PackageTags>parallel;file;processing;lines;utf8;performance;span</PackageTags>
     <RepositoryUrl>https://github.com/hjrb/ParallelFileProcessor</RepositoryUrl>
@@ -26,12 +26,13 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnablePackageValidation>false</EnablePackageValidation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReleaseNotes>0.1.0 Initial preview: parallel chunked line processing, BOM detection (UTF-8/16/32 LE+BE), per-task context + finalize callback, zero-copy Span&lt;byte&gt; lines, auto chunk/task sizing.</PackageReleaseNotes>
+    <PackageReleaseNotes>0.1.0 Initial preview.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- Include root README in the package -->
     <None Include="..\README.md" Pack="true" PackagePath="/README.md" />
+    <None Include="..\License.txt" Pack="true" PackagePath="/README.txt" />
   </ItemGroup>
 
   <ItemGroup>

@@ -53,6 +53,7 @@ using System.Text;
 
 var targetFile = @"/data/huge.log";
 var needle = Encoding.UTF8.GetBytes("ERROR");
+long errorCount = 0;
 
 var result = await ParallelTextFileProcessor.ProcessAsync<object>(
     filePath: targetFile,
@@ -64,8 +65,9 @@ var result = await ParallelTextFileProcessor.ProcessAsync<object>(
             Interlocked.Increment(ref errorCount);
         }
         return true; // continue
-    });
-
+    }
+);
+Console.WriteLine(result); // shows stats
 Console.WriteLine($"Lines with ERROR: {errorCount}; Total lines: {result.TotalLines}");
 ```
 
