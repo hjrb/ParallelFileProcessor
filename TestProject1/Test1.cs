@@ -3,6 +3,8 @@ using System.Text;
 
 using ParallelFileProcessor;
 
+using Tools;
+
 namespace TestProject1
 {
     [TestClass]
@@ -68,27 +70,6 @@ namespace TestProject1
             }
         }
 
-        static string RandomString(int length, char[]? invalidChars = null)
-        {
-            // use unicode characters
-            var sb = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                do
-                {
-                    var c = Random.Shared.Next(0x20, 0xD7FF);
-                    if (invalidChars != null && Array.IndexOf(invalidChars, (char)c) >= 0)
-                    {
-                        continue;
-                    }
-
-                    sb.Append(c);
-                    break;
-
-                } while (true);
-            }
-            return sb.ToString();
-        }
 
         [TestMethod]
         [DataRow(100_000, 0)]
@@ -105,7 +86,7 @@ namespace TestProject1
             var invalidChars = new[] { '\r', '\n', ';' };
             var testData = Enumerable.Range(0, count).Select(i => Random.Shared.Next(count)).ToArray();
             using var cts = new CancellationTokenSource();
-            await File.WriteAllLinesAsync(tempFile, testData.Select(i => $"{i};{RandomString(Random.Shared.Next(50), invalidChars)}"), Encoding.UTF8, cts.Token);
+            await File.WriteAllLinesAsync(tempFile, testData.Select(i => $"{i};{StaticTools.RandomString(Random.Shared.Next(50), invalidChars)}"), Encoding.UTF8, cts.Token);
             var sw = Stopwatch.StartNew();
             try
             {
@@ -198,7 +179,7 @@ namespace TestProject1
                 List<int> factory()
                 {
                     var list = new List<int>(count);
-                    lock (contextList)
+                    lock (contextList) // MUST lock as this may be called concurrently
                         contextList.Add(list);
                     return list;
                 }
@@ -359,7 +340,7 @@ namespace TestProject1
         [TestMethod]
         public async Task TestMethodCountErrorInLog()
         {
-            var targetFile = Path.GetTempFileName(); //@"/data/huge.log";
+            var targetFile = Path.GetTempFileName(); 
             using var cts = new CancellationTokenSource();
             var lines = 10_000_000;
             var writtenErrors = 0L;

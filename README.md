@@ -105,6 +105,47 @@ var res = await ParallelTextFileProcessor.ProcessAsync<TaskContext>(
 Console.WriteLine($"Total WARN lines: {globalMatches}");
 ```
 
+### Using context
+```csharp
+var count = 1_984_587; // use some non odd, large enough number
+var tempFile = Path.GetTempFileName();
+var encoding = Encoding.GetEncoding("utf-16");
+var testData = Enumerable.Range(0, count).ToArray();
+using var cts = new CancellationTokenSource();
+// write sequential integers, one per line
+await File.WriteAllLinesAsync(tempFile, testData.Select(i => i.ToString()), encoding, cts.Token);
+
+// global context list to hold all task contexts - must be synchronized!!
+var contextList = new List<List<int>>();
+// factory to create a new context for each task
+List<int> factory()
+{
+    var list = new List<int>(count);
+    lock (contextList) // MUST lock as this may be called concurrently
+        contextList.Add(list);
+    return list;
+}
+// process the file
+var processResult = await ParallelTextFileProcessor.ProcessAsync<List<int>>(
+    filePath: tempFile,
+    processLine: (batchNumber, line, context) =>
+    {
+        var s = encoding.GetString(line); // this could be avoided if we processed bytes directly
+        var value = int.Parse(s);
+        context!.Add(value); // this doese not need locking as each context is task-local
+        return true;
+    },
+    contextFactory: async () => await Task.FromResult(factory()),
+    numTasks: -1,
+    encoding: encoding,
+    chunkSize: -1 // auto size
+);
+Console.WriteLine($"Processed {processResult.TotalLines} lines");
+Console.WriteLine($"Process result: {processResult}");
+// note: the items may be out of order
+var numbers = contextList.SelectMany(l => l).Order().ToList();
+// to more stuff with the numbers...
+```
 ### Early Stop
 Return `false` in `processLine` when you have found enough matches.
 
